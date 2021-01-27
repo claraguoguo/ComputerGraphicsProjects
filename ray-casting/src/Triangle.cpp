@@ -12,25 +12,20 @@ bool Triangle::intersect(
   Eigen::Vector3d pt2 = std::get<1>(corners); 
   Eigen::Vector3d pt3 = std::get<2>(corners); 
 
-  // Eigen::Vector3d t1 = pt2 - pt1;
-  // Eigen::Vector3d t2 = pt3 - pt1;
-  Eigen::Vector3d t1 = pt1 - pt2;
-  Eigen::Vector3d t2 = pt3 - pt2;
+  Eigen::Vector3d t1 = pt2 - pt1;
+  Eigen::Vector3d t2 = pt2 - pt3;
 
   Eigen::Matrix3d A;
   Eigen::Vector3d b;
 
-  A << t1.x(), t2.x(), -1*ray.direction.x(),   
-       t1.y(), t2.y(), -1*ray.direction.y(),
-       t1.z(), t2.z(), -1*ray.direction.z();
+  // Reference: textbook page 78 - 4.4.2 Ray-Triangle Intersection
+  A << t1.x(), t2.x(), ray.direction.x(),   
+       t1.y(), t2.y(), ray.direction.y(),
+       t1.z(), t2.z(), ray.direction.z();
+  b = pt2 - ray.origin;
 
-  b << ray.origin.x(), ray.origin.y(), ray.origin.z();
-
-  Eigen::Vector3d x = A.fullPivLu().solve(b);
-
-  double relative_error = (A*x - b).norm() / b.norm(); // norm() is L2 norm
-  std::cout << "The relative error is:\n" << relative_error << std::endl;
-
+  // Solve for linear system equation
+  Eigen::Vector3d x = A.colPivHouseholderQr().solve(b);
 
   double alpha = x(0);
   double beta = x(1);
@@ -42,7 +37,6 @@ bool Triangle::intersect(
   // compute normal unit vector
   n = t2.cross(t1);
   n.normalize();
-  
   return true;
   ////////////////////////////////////////////////////////////////////////////
 }
