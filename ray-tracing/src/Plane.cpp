@@ -13,7 +13,7 @@ bool Plane::intersect(
   }
 
   double dis = ((-1*normal).dot(ray.origin - point))/(normal.dot(ray.direction));
-  if (dis > min_t && dis > 1){
+  if (dis >= min_t){
     t = dis;
     n = normal;
     return true;

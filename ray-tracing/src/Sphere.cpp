@@ -11,7 +11,7 @@ bool Sphere::intersect(
   // Replace with your code here:
   Eigen::Vector3d dir = ray.direction;
   double A = dir.dot(dir);
-  double B = (2*dir).dot(ray.origin - center);
+  double B = 2*dir.dot(ray.origin - center);
   double C = (ray.origin - center).dot(ray.origin - center) - radius*radius;
 
   double discriminant = B*B - 4*A*C;
@@ -25,11 +25,11 @@ bool Sphere::intersect(
     double bigger_t = std::max(t1, t2);
 
     // check for valid roots
-    if (smaller_t > min_t && smaller_t > 1){
+    if (smaller_t > min_t){
       t = smaller_t;
     }
 
-    else if (bigger_t > min_t && bigger_t > 1){
+    else if (bigger_t > min_t && smaller_t < min_t){
       t = bigger_t;
     }
     else {
@@ -38,18 +38,18 @@ bool Sphere::intersect(
     }
 
     // compute normal (unit) vector
-    if (t > min_t && t > 1){
+    if (t > min_t){
       n = ray.origin + t*dir - center;
       n = n/radius;
       return true;
     }
   }
 
-  else if (discriminant == 0){
+  else if (discriminant == 0.0){
     // 1 real solution
     double t = -1*B/(2*A);
 
-    if (t > min_t && t > 1){
+    if (t > min_t){
       n = ray.origin + t*dir - center;
       n = n/radius;
       return true;
