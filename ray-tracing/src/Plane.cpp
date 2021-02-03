@@ -6,6 +6,18 @@ bool Plane::intersect(
 {
   ////////////////////////////////////////////////////////////////////////////
   // Replace with your code here:
+  
+  // check if ray.direction and normal is perpendicular (ray is parallel to plane)
+  if (normal.dot(ray.direction) == 0) {
+    return false;
+  }
+
+  double dis = ((-1*normal).dot(ray.origin - point))/(normal.dot(ray.direction));
+  if (dis > min_t && dis > 1){
+    t = dis;
+    n = normal;
+    return true;
+  }
   return false;
   ////////////////////////////////////////////////////////////////////////////
 }

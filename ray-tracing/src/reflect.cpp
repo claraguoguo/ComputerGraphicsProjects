@@ -4,6 +4,7 @@ Eigen::Vector3d reflect(const Eigen::Vector3d & in, const Eigen::Vector3d & n)
 {
   ////////////////////////////////////////////////////////////////////////////
   // Replace with your code here:
-  return Eigen::Vector3d(0,0,0);
+  // note: assuming vector <in> points toward the surface
+  return (in - 2*n.dot(in)*n).normalized();
   ////////////////////////////////////////////////////////////////////////////
 }
