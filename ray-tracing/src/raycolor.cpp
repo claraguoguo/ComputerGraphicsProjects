@@ -3,7 +3,7 @@
 #include "blinn_phong_shading.h"
 #include "reflect.h"
 
-#define MAX_RECURSION 7
+#define MAX_RECURSION 8
 
 bool raycolor(
   const Ray & ray, 
@@ -31,7 +31,7 @@ bool raycolor(
   // compute the reflection of the incoming ray w.r.t to first hit object
   Ray reflection;
   Eigen::Vector3d hit_point;
-  hit_point = ray.direction + t*ray.direction;
+  hit_point = ray.origin + t*ray.direction;
   reflection.direction = reflect(ray.direction.normalized(), n);
   reflection.origin = hit_point + eps * reflection.direction;
 
