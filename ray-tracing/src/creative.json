@@ -8,10 +8,72 @@
     "height": 1,
     "width": 1.7777777778
   },
+
   "materials": [
+    {
+      "name": "orange egg",
+      "ka": [1.0, 0.7, 0.2],
+      "kd": [1.0, 0.7, 0.2],
+      "ks": [0.8,0.8,0.8],
+      "km": [0.05,0.05,0.05],
+      "phong_exponent": 10
+    },
+    {
+      "name": "green metal",
+      "ka": [0.1, 0.8, 0.1],
+      "kd": [0.1, 0.8, 0.1],
+      "ks": [0.1, 0.8, 0.1],
+      "km": [0.1, 0.8, 0.1],
+      "phong_exponent": 500
+    },
+    {
+      "name": "blue metal",
+      "ka": [0.1, 0.1, 0.8],
+      "kd": [0.1, 0.1, 0.8],
+      "ks": [0.1, 0.1, 0.8],
+      "km": [0.1, 0.1, 0.8],
+      "phong_exponent": 500
+    },
+    {
+      "name": "red metal",
+      "ka": [0.9, 0.1, 0.1],
+      "kd": [0.9, 0.1, 0.1],
+      "ks": [0.9, 0.1, 0.1],
+      "km": [0.9, 0.1, 0.1],
+      "phong_exponent": 500
+    }
   ],
   "lights":[
+    {
+      "type": "directional",
+      "direction": [0,0,-1],
+      "color": [1.0,1.0,1.0]
+    }
   ],
   "objects": [
+    {
+      "type": "sphere",
+      "material": "orange egg",
+      "center": [0,0,0],
+      "radius": 0.5
+    },
+    {
+      "type": "sphere",
+      "material": "blue metal",
+      "center": [0,0.5,0],
+      "radius": 0.3
+    },
+    {
+      "type": "sphere",
+      "material": "green metal",
+      "center": [0.3,-0.3,0],
+      "radius": 0.3
+    },
+    {
+      "type": "sphere",
+      "material": "red metal",
+      "center": [-0.3,-0.3,0],
+      "radius": 0.3
+    }
   ]
 }
