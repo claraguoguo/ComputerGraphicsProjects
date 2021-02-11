@@ -13,9 +13,9 @@ bool ray_intersect_box(
   double a_x, a_y, a_z;
 
   // Reference: Textbook Page-302
-  a_x = ray.direction.x();
-  a_y = ray.direction.y();
-  a_z = ray.direction.z();
+  a_x = 1.0/ray.direction.x();
+  a_y = 1.0/ray.direction.y();
+  a_z = 1.0/ray.direction.z();
 
   // x-component
   if (a_x >= 0) {
