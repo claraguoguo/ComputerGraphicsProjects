@@ -1,6 +1,6 @@
 #include "AABBTree.h"
 #include "insert_box_into_box.h"
-
+#include "iostream"
 
 AABBTree::AABBTree(
   const std::vector<std::shared_ptr<Object> > & objects,
@@ -19,7 +19,7 @@ AABBTree::AABBTree(
   else if (num_leaves == 1) {
     this->left = objects[0];
     this->right = NULL;
-    this->box = objects[0]->box;
+    insert_box_into_box(this->left->box, this->box);
   }
   else if (num_leaves == 2) {
     this->left = objects[0];
@@ -36,14 +36,16 @@ AABBTree::AABBTree(
     // Find the longest axis & its range
     Eigen::RowVector3d axis_diff = this->box.max_corner - this->box.min_corner;
     double longest_axis = std::max(std::max(axis_diff.x(), axis_diff.y()), axis_diff.z());
-    double axis_mid_point = 0.5 * longest_axis;
 
     // Find the axis index. x-axis = 0, y-axis = 1, z-axis = 2.
     int axis_index;
     if (longest_axis == axis_diff.x()) axis_index = 0;
     else if (longest_axis == axis_diff.y()) axis_index = 1;
-    else axis_index = 0;
+    else if (longest_axis == axis_diff.z()) axis_index = 2;
+    else assert(true);
 
+    double axis_mid_point = 0.5*(this->box.max_corner(axis_index) + this->box.min_corner(axis_index));
+    
     // Sort object by its center along the longest axis and determine the left-right split.
     std::vector<std::shared_ptr<Object>> left_half_objects; 
     std::vector<std::shared_ptr<Object>> right_half_objects; 

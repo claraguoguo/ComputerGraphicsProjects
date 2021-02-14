@@ -10,6 +10,15 @@ void nearest_neighbor_brute_force(
   ////////////////////////////////////////////////////////////////////////////
   // Replace with your code here:
   I = -1;
-  sqrD = 0;
+  sqrD = std::numeric_limits<double>::infinity();
+
+  for (int i = 0; i < points.rows(); ++i) {
+    double curr_dist = (query - points.row(i)).squaredNorm();
+    // update index and sqr distance
+    if (curr_dist < sqrD) {
+      I = i;
+      sqrD = curr_dist;
+    }
+  } 
   ////////////////////////////////////////////////////////////////////////////
 }
