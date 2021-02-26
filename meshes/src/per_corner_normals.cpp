@@ -3,7 +3,7 @@
 // Hint:
 #include "vertex_triangle_adjacency.h"
 #include <iostream>
-#include <math.h>
+#include <cmath>
 
 void per_corner_normals(
   const Eigen::MatrixXd & V,
@@ -19,10 +19,10 @@ void per_corner_normals(
 
   Eigen::RowVector3d normal_weighted_sum, general_norm, curr_norm;
   for (int i = 0; i < F.rows(); ++i) {
-    normal_weighted_sum = Eigen::RowVector3d(0, 0, 0);
     general_norm = triangle_area_normal(
       V.row(F(i, 0)), V.row(F(i, 1)), V.row(F(i, 2)));
     for (int j = 0; j < F.cols(); ++j){
+      normal_weighted_sum = Eigen::RowVector3d(0, 0, 0);
       for (auto & face : VF[F(i, j)]) {
         curr_norm = triangle_area_normal(
           V.row(F(face, 0)), V.row(F(face, 1)), V.row(F(face, 2)));
@@ -30,9 +30,9 @@ void per_corner_normals(
         // Compute the difference between curr_norm (unit vector) and normal_weighted_sum
         double diff_angle = acos(abs(curr_norm.normalized().dot(general_norm.normalized())));
         // Convert from radians to degree
-        diff_angle = diff_angle*180/M_PI;
-        // Use curr_norm, if diff_angle is larger than threshold
-        if(diff_angle > corner_threshold) {
+        diff_angle = diff_angle*180.0/M_PI;
+        // Use smoothed normal, if diff_angle is less than threshold
+        if(diff_angle < corner_threshold) {
           normal_weighted_sum += curr_norm;
         }
       }

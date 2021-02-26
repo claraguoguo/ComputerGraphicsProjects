@@ -9,7 +9,7 @@ Eigen::RowVector3d triangle_area_normal(
   ////////////////////////////////////////////////////////////////////////////
   // Replace with your code:
   Eigen::RowVector3d normal = (b-a).cross(c-a).normalized();
-  double area = ((b-a).cross(c-a)).norm()/2.0;
+  double area = 0.5*((b-a).cross(c-a)).norm();
   ////////////////////////////////////////////////////////////////////////////
   return area*normal;
 }
