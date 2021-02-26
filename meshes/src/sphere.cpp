@@ -25,14 +25,14 @@ void sphere(
 
   int counter = 0; 
   double x, y, z, theta, phi, u, v;
-  for (double i = 0; i < num_faces_u; ++i){
-    for (double j = 0; j < num_faces_v; ++j){
-      u = i/num_faces_u;
-      v = j/num_faces_v;
-
+  for (double i = 0.0; i < num_faces_u + 1; ++i){
+    for (double j = 0.0; j < num_faces_v + 1; ++j){
+      u = i/(double)num_faces_u;
+      v = j/(double)num_faces_v;
+      // std::cout << u << v;
       // Ref: Textbook P-42
       theta = v*M_PI;
-      phi = u*(2*M_PI);
+      phi = u*(2.0*M_PI);
       x = cos(phi)*sin(theta);
       y = sin(phi)*sin(theta);
       z = cos(theta);
@@ -48,16 +48,17 @@ void sphere(
   
   counter = 0;  // Reset counter
   int v1, v2, v3, v4;  // 4 corners of poly
-  for (double i = 0; i < num_faces_u; ++i){
-    for (double j = 0; j < num_faces_v; ++j){
+  Eigen::RowVector4i curr_face;
+  for (int i = 0; i < num_faces_u; ++i){
+    for (int j = 0; j < num_faces_v; ++j){
       v1 = j + (num_faces_v + 1)*i;
       v2 = j + (num_faces_v + 1)*(i+1);
       v3 = v2 + 1;
       v4 = v1 + 1;
-
-      F.row(counter) = Eigen::RowVector4i(v1, v2, v3, v4);
-      UF.row(counter) = Eigen::RowVector4i(v1, v2, v3, v4);
-      NF.row(counter) = Eigen::RowVector4i(v1, v2, v3, v4);
+      curr_face = Eigen::RowVector4i(v1, v2, v3, v4);
+      F.row(counter) = curr_face;
+      UF.row(counter) = curr_face;
+      NF.row(counter) = curr_face;
 
       counter++;
     }
