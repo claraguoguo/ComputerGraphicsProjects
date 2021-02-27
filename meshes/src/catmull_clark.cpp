@@ -26,8 +26,6 @@ void catmull_clark(
 {
   ////////////////////////////////////////////////////////////////////////////
   // Replace with your code here:
-  std::cout << num_iters << std::endl;
-
   if (num_iters == 0) return; 
   // Face point of every face
   std::unordered_map<int, Eigen::RowVector3d> face_point;
