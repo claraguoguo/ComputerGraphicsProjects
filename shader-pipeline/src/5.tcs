@@ -16,6 +16,16 @@ void main()
 {   
   /////////////////////////////////////////////////////////////////////////////
   // Replace with your code:
+
+  // The number of new edges each input each should split into 
+  gl_TessLevelOuter[0] = 5.0;
+	gl_TessLevelOuter[1] = 5.0;
+	gl_TessLevelOuter[2] = 5.0;
+
+  // The number of edges to place toward the center of the patch 
+  gl_TessLevelInner[0] = 5.0;
+	gl_TessLevelInner[1] = 5.0;
+
   pos_es_in[gl_InvocationID] = pos_cs_in[gl_InvocationID];
   /////////////////////////////////////////////////////////////////////////////
 }

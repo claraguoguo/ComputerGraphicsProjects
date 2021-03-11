@@ -22,7 +22,12 @@ vec3 blinn_phong(
 {
   /////////////////////////////////////////////////////////////////////////////
   // Replace with your code 
-  return vec3(1,1,1);
+  vec3 light = vec3(1,1,1);
+  // half-vector
+  vec3 h = normalize(v + l);
+  
+  // Illumination = ambient + diffuse + Phong 
+  return ka * light + kd * light * max(0.0, dot(n, l)) + ks * light * pow(max(0.0, dot(n, h)), p);
   /////////////////////////////////////////////////////////////////////////////
 }
 

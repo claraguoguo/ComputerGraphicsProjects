@@ -6,11 +6,16 @@
 //   time  seconds on animation clock
 // Returns affine model transformation as 4x4 matrix
 //
-// expects: identity, rotate_about_y, translate, PI
+// expects: identity, rotate_about_y, translate, M_PI
 mat4 model(bool is_moon, float time)
 {
   /////////////////////////////////////////////////////////////////////////////
   // Replace with your code 
+  if (is_moon) {
+    // calculate theta (in radiants)
+    float theta = time*(2*M_PI/4); 
+    return rotate_about_y(theta);
+  }
   return identity();
   /////////////////////////////////////////////////////////////////////////////
 }

@@ -27,7 +27,40 @@ void main()
 {
   /////////////////////////////////////////////////////////////////////////////
   // Replace with your code 
-  pos_fs_in = interpolate(gl_TessCoord, pos_es_in[0], pos_es_in[1], pos_es_in[2]);
+  vec3 barycenter_point = interpolate(gl_TessCoord, pos_es_in[0].xyz, pos_es_in[1].xyz, pos_es_in[2].xyz);
+  vec4 unit_vector = vec4(normalize(barycenter_point), 1.0);
+  
+  sphere_fs_in = unit_vector.xyz;
+
+  mat4 model = model(is_moon, animation_seconds);
+
+  // view and model transformed 3D normal
+  // Note: surface point on the unit sphere is equal to its normal --> normal == sphere_fs_in
+  //       transformed normal = transpose inverse of model-view matrix
+  normal_fs_in = (transpose(inverse(view * model))* unit_vector).xyz;
+
+  if (is_moon) {
+    // shrink model by 70%
+    model = uniform_scale(0.3)*model;
+    
+    /* 
+    shift away from origin by 2 units and rotate around the origin at a 
+    frequency of 1 revolution per 4 seconds 
+    */
+    float theta = animation_seconds*M_PI/2;
+    vec4 t = vec4(2*sin(theta), 0, 2*cos(theta), 0);
+
+    // view and model transformed 3D position
+    view_pos_fs_in = view * (model * unit_vector + t);
+
+    // projected, view, and model transformed 3D position
+    pos_fs_in = proj * view_pos_fs_in;
+  }
+
+  else {
+    view_pos_fs_in = view * unit_vector;
+    pos_fs_in = proj * view_pos_fs_in;
+  }
   gl_Position = pos_fs_in;
   /////////////////////////////////////////////////////////////////////////////
 }
