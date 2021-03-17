@@ -9,6 +9,7 @@
 //
 // Inputs:
 //   f  function that computes scalar objective value at a given z
+//   proj_z function that projects a guess onto a set of constraints
 //   z  #z vector of initial z values
 //   dz  #z vector of changes to z
 //   max_step  maximum step to take in dir

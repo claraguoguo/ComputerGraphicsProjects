@@ -4,7 +4,7 @@
 #include <Eigen/Core>
 #include <vector>
 // Compute the deformations (tranformations from rest pose) for each node in a
-// forward kinematics hiearchy (reading each node's relative transformation from
+// forward kinematics hierarchy (reading each node's relative transformation from
 // rest).
 //
 // Inputs:
