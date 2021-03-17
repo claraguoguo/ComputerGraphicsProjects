@@ -16,9 +16,9 @@ void linear_blend_skinning(
     // applied to vertex's rest position
     Eigen::Vector4d weighted_sum(0,0,0,0);
     for (int j = 0; j < skeleton.size(); ++j) {
-      double weight = W(i, skeleton[j].weight_index);
-      if (weight == -1) continue;
-      weighted_sum += T[j] * Eigen::Vector4d(V(i,0), V(i,1), V(i,2), 1) * weight;
+      double weight_idx = skeleton[j].weight_index;
+      if (weight_idx == -1) continue;
+      weighted_sum += T[j] * Eigen::Vector4d(V(i,0), V(i,1), V(i,2), 1) * W(i, weight_idx);
     }
     // normalize 
     weighted_sum /= weighted_sum[3];
