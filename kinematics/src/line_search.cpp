@@ -10,18 +10,15 @@ double line_search(
 {
   /////////////////////////////////////////////////////////////////////////////
   // Replace with your code
-  
-  double step = max_step;
   Eigen::VectorXd z_updated = z - max_step*dz;
   proj_z(z_updated);
-
-  while (f(z_updated) < f(z)) {
+  double step = max_step;
+  while (f(z_updated) > f(z)) {
     // decrease step by half
     step *= 0.5;
     z_updated = z - step*dz;
     proj_z(z_updated);
   }
-
   return step;
   /////////////////////////////////////////////////////////////////////////////
 }
