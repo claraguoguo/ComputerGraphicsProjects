@@ -19,10 +19,25 @@ void fast_mass_springs_step_dense(
 {
   //////////////////////////////////////////////////////////////////////////////
   // Replace with your code
-  for(int iter = 0;iter < 50;iter++)
+  double penalty_weight = 1e10;
+  Eigen::MatrixXd d, y, b_penalty, updated_p;
+  
+  updated_p = Ucur;
+  for(int iter = 0; iter < 50; iter++)
   {
-    const Eigen::MatrixXd l = Ucur;
-    Unext = prefactorization.solve(l);
+    d = Eigen::MatrixXd::Zero(r.size(), 1);
+    int i, j;
+    for (int row = 0; row < r.size(); ++row) {
+      i = E(row, 0);
+      j = E(row, 1);
+      d.row(row) = r(row)*(updated_p.row(i) - updated_p.row(j)).normalized();
+    }
+
+    y = (1.0/pow(delta_t, 2))*M*(2*Ucur - Uprev) + fext;
+    b_penalty = k*A.transpose()*d + y + penalty_weight*C.transpose()*C; 
+    updated_p = prefactorization.solve(b_penalty);
   }
+
+  Unext = updated_p;
   //////////////////////////////////////////////////////////////////////////////
 }
