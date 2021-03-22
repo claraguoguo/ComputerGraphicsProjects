@@ -25,7 +25,7 @@ void fast_mass_springs_step_dense(
   updated_p = Ucur;
   for(int iter = 0; iter < 50; iter++)
   {
-    d = Eigen::MatrixXd::Zero(r.size(), 3);
+    d = Eigen::MatrixXd::Zero(r.size(), V.cols());
     int i, j;
     for (int row = 0; row < r.size(); ++row) {
       i = E(row, 0);
