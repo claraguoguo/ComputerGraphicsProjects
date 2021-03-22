@@ -17,7 +17,7 @@ bool fast_mass_springs_precomputation_sparse(
 {
   /////////////////////////////////////////////////////////////////////////////
   // Replace with your code
-  std::vector<Eigen::Triplet<double> > ijv;
+  std::vector<Eigen::Triplet<double> > ijv, ijv_2;
   const int n = V.rows();
   Eigen::SparseMatrix<double> Q(n,n);
 
@@ -41,12 +41,11 @@ bool fast_mass_springs_precomputation_sparse(
 
   // Compute selection matrix (#b by #V)
   // C has one row per pinned vertex with '+1' in the corresponding column
-  ijv.clear();
   for (int i = 0; i < b.size(); ++i) {
-    ijv.emplace_back(i, b(i), 1.0);
+    ijv_2.emplace_back(i, b(i), 1.0);
   }
   C.resize(b.size(), n);
-  C.setFromTriplets(ijv.begin(),ijv.end());
+  C.setFromTriplets(ijv_2.begin(),ijv_2.end());
   
   // Compute energy's quadratic matrix with penalty term
   double penalty_weight = 1.0e10;
